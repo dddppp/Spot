@@ -11,20 +11,23 @@
 import UIKit
 import Foundation
 
+
+// ??? REST API for Firebase, AWS and Google cloud 
+
 // MARK: Generic CloudHandler
 
 class CloudHandler {
     required init() {}
     func upload(_ params: Dictionary<String, Any>) {
-        print("Default CloudHandler upload implementation")
+        fatalError("Default CloudHandler used. Use subclass instead!")
     }
     
     func connect() {
-        print("Default CloudHandler connect implementation")
+        fatalError("Default CloudHandler used. Use subclass instead!")
     }
     
     func disconnect() {
-        print("Default CloudHandler disconnect implementation")
+        fatalError("Default CloudHandler used. Use subclass instead!")
     }
 }
 

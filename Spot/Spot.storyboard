@@ -41,7 +41,11 @@
                                     <action selector="pressedCancel:" destination="zHn-Ic-ePJ" id="xhR-za-W6T"/>
                                 </connections>
                             </barButtonItem>
-                            <barButtonItem title="To Cloud" id="HCv-ZM-79X"/>
+                            <barButtonItem title="To Cloud" id="HCv-ZM-79X">
+                                <connections>
+                                    <action selector="pressedSendToCloud:" destination="zHn-Ic-ePJ" id="Afy-Ik-QP6"/>
+                                </connections>
+                            </barButtonItem>
                         </leftBarButtonItems>
                         <barButtonItem key="rightBarButtonItem" title="e-mail (@)" id="TmW-Qa-znS">
                             <connections>
