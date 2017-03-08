@@ -12,13 +12,20 @@ import UIKit
 import Foundation
 
 
+struct SpotData {
+    var appName : String
+    var deviceAppInfo : String
+    var combinedImageData : Data
+    var screenshotData : Data
+}
+
 // ??? REST API for Firebase, AWS and Google cloud 
 
 // MARK: Generic CloudHandler
 
 class CloudHandler {
     required init() {}
-    func upload(_ params: Dictionary<String, Any>) {
+    func upload(_ spotData : SpotData) {
         fatalError("Default CloudHandler used. Use subclass instead!")
     }
     
@@ -33,22 +40,31 @@ class CloudHandler {
 
 // MARK: FirebaseHandler
 
+// https://firebase.google.com/docs/reference/rest/database/
+// https://firebase.google.com/docs/database/rest/start
+
 class FirebaseHandler: CloudHandler {
-    override func upload(_ params: Dictionary<String, Any>) {}
+    override func upload(_ spotData : SpotData) {}
     override func connect() {}
     override func disconnect() {}
 }
 
 // MARK: AwsHandler 
 
+// http://docs.aws.amazon.com/AmazonS3/latest/API/Welcome.html
+
 class AwsHandler: CloudHandler {
-    override func upload(_ params: Dictionary<String, Any>) {}
+    override func upload(_ spotData : SpotData) {}
     override func connect() {}
     override func disconnect() {}
 }
 
+// MARK: Google cloud 
+
+// https://cloud.google.com/storage/docs/json_api/
+
 class GoogleHandler: CloudHandler {
-    override func upload(_ params: Dictionary<String, Any>) {}
+    override func upload(_ spotData : SpotData) {}
     override func connect() {}
     override func disconnect() {}
 }
@@ -84,7 +100,7 @@ extension UIWindow {
     
     func takeScreenshotAndUpload() {
         // Take screenshot
-        cloudHandler.upload([:])
+        cloudHandler.upload(SpotData())
     }
     
     public static func start() {
