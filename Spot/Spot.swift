@@ -2,11 +2,55 @@
 //  Spot.swift
 //  Spot
 //
-//  Created by Daniel Leivers on 20/11/2016.
+//  Originally Created by Daniel Leivers on 20/11/2016.
 //  Copyright © 2016 Daniel Leivers. All rights reserved.
 //
 
+//  Extended by Alex Layton and Daniele Pietrobelli
+
 import UIKit
+import Foundation
+
+// MARK: Generic CloudHandler
+
+class CloudHandler {
+    required init() {}
+    func upload(_ params: Dictionary<String, Any>) {
+        print("Default CloudHandler upload implementation")
+    }
+    
+    func connect() {
+        print("Default CloudHandler connect implementation")
+    }
+    
+    func disconnect() {
+        print("Default CloudHandler disconnect implementation")
+    }
+}
+
+// MARK: FirebaseHandler
+
+class FirebaseHandler: CloudHandler {
+    override func upload(_ params: Dictionary<String, Any>) {}
+    override func connect() {}
+    override func disconnect() {}
+}
+
+// MARK: AwsHandler 
+
+class AwsHandler: CloudHandler {
+    override func upload(_ params: Dictionary<String, Any>) {}
+    override func connect() {}
+    override func disconnect() {}
+}
+
+class GoogleHandler: CloudHandler {
+    override func upload(_ params: Dictionary<String, Any>) {}
+    override func connect() {}
+    override func disconnect() {}
+}
+
+// MARK: Specific handlers
 
 extension UIWindow {
     open override func motionEnded(_ motion: UIEventSubtype, with event: UIEvent?) {
@@ -18,15 +62,37 @@ extension UIWindow {
 
 @objc public class Spot: NSObject {
     
-    static let sharedInstance = Spot()
+    static let sharedInstance = Spot(type: FirebaseHandler.self)
     var handling: Bool = false
+    let cloudHandler: CloudHandler
+
+    // MARK: CloudHandler implementation 
+    
+    init<T: CloudHandler>(type: T.Type) {
+        cloudHandler = type.init()
+    }
+    
+    // MARK: Spot original methods
+    
+    private func cloudSetup() {
+        // Do setup
+        cloudHandler.connect()
+    }
+    
+    func takeScreenshotAndUpload() {
+        // Take screenshot
+        cloudHandler.upload([:])
+    }
     
     public static func start() {
+        // May need to deal with a callback
         sharedInstance.handling = true
+        sharedInstance.cloudHandler.connect()
     }
     
     public static func stop() {
         sharedInstance.handling = false
+        sharedInstance.cloudHandler.disconnect()
     }
     
     static func launchFlow() {
@@ -34,6 +100,8 @@ extension UIWindow {
             loadViewControllers(withScreenshot: screenshot)
         }
     }
+    
+    // MARK: Internal methods
     
     static func captureScreen() -> UIImage? {
         var screenshot: UIImage?

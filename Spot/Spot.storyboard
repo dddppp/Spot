@@ -1,11 +1,12 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11542" systemVersion="16B2555" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="0JX-wT-qs4">
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="15G1108" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="0JX-wT-qs4">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11524"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <capability name="Navigation items with more than one left or right bar item" minToolsVersion="7.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -34,12 +35,15 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="zZv-r0-AdK">
-                        <barButtonItem key="leftBarButtonItem" title="Cancel" id="ORb-3H-FSb">
-                            <connections>
-                                <action selector="pressedCancel:" destination="zHn-Ic-ePJ" id="xhR-za-W6T"/>
-                            </connections>
-                        </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" title="Send" id="TmW-Qa-znS">
+                        <leftBarButtonItems>
+                            <barButtonItem title="Cancel" id="ORb-3H-FSb">
+                                <connections>
+                                    <action selector="pressedCancel:" destination="zHn-Ic-ePJ" id="xhR-za-W6T"/>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem title="To Cloud" id="HCv-ZM-79X"/>
+                        </leftBarButtonItems>
+                        <barButtonItem key="rightBarButtonItem" title="e-mail (@)" id="TmW-Qa-znS">
                             <connections>
                                 <action selector="pressedSend:" destination="zHn-Ic-ePJ" id="AzW-xY-zWy"/>
                             </connections>

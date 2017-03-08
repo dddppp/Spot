@@ -108,6 +108,10 @@ class SpotViewController: UIViewController {
     @IBAction func pressedCancel(_ sender: Any) {
         self.navigationController?.dismiss(animated: true, completion: nil)
     }
+    
+    @IBAction func pressedSendToCloud(_ sender: Any) {
+        // MARK TODO!
+    }
 }
 
 extension SpotViewController: MFMailComposeViewControllerDelegate {
