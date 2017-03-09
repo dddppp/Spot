@@ -170,7 +170,7 @@
 				TargetAttributes = {
 					A05A7A831DE19EC500B9E7BE = {
 						CreatedOnToolsVersion = 8.1;
-						DevelopmentTeam = 993FLJTASU;
+						DevelopmentTeam = 4Y927CFRKM;
 						ProvisioningStyle = Automatic;
 					};
 					A05A7A971DE19EC500B9E7BE = {
@@ -375,7 +375,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = 993FLJTASU;
+				DEVELOPMENT_TEAM = 4Y927CFRKM;
 				INFOPLIST_FILE = Spot/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.sofaracing.Spot;
@@ -388,7 +388,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = 993FLJTASU;
+				DEVELOPMENT_TEAM = 4Y927CFRKM;
 				INFOPLIST_FILE = Spot/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.sofaracing.Spot;

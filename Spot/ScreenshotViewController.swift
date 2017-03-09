@@ -111,7 +111,15 @@ class SpotViewController: UIViewController {
     
     @IBAction func pressedSendToCloud(_ sender: Any) {
         print("press send to cloud")
-        Spot.sharedInstance.takeScreenshotAndUpload(spotData: SpotData(appName: Spot.appName(), deviceAppInfo: Spot.deviceAppInfo(), combinedImageData: combinedImageData()!, screenshotData: screenshotData()!))
+        
+        let combinedData = combinedImageData()
+        
+        guard let screenData = screenshotData() else {
+            print("nil screen data")
+            return
+        }
+        
+        Spot.sharedInstance.takeScreenshotAndUpload(spotData: SpotData(appName: Spot.appName(), deviceAppInfo: Spot.deviceAppInfo(), combinedImageData: combinedData, screenshotData: screenData))
     }
 }
 

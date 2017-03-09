@@ -14,7 +14,7 @@ import Foundation
 struct SpotData {
     var appName : String
     var deviceAppInfo : String
-    var combinedImageData : Data
+    var combinedImageData : Data?
     var screenshotData : Data
 }
 
@@ -35,10 +35,6 @@ class CloudHandler {
     func disconnect() {
         fatalError("Default CloudHandler used. Use subclass instead!")
     }
-    
-    func configuration() {
-        fatalError("Default CloudHandler used. Use subclass instead!")
-    }
 }
 
 // MARK: FirebaseHandler
@@ -52,40 +48,25 @@ class CloudHandler {
 
 class FirebaseHandler: CloudHandler {
     
-    // Get a reference to the storage service using the default Firebase App
-    let storage = FIRStorage.storage()
-    // Create a storage reference from our storage service
-    var storageRef : FIRStorageReference?
-
-    required init() {
-        print("FirebaseHandler init")
-        super.init()
-    } 
-    
-    override func configuration() {
-        FIRApp.configure()
-        self.storageRef = storage.reference()
-    }
-    
     override func upload(_ spotData : SpotData) {
-        guard storageRef != nil else {
-            print("incorrect initilisation")
-            return
-        }
+
         
-        // Create a reference to the file you want to upload
-        let riversRef = storageRef!.child(spotData.deviceAppInfo)
+        print("within upload function in Firebase handler")
         
-        // Upload the file to the path "images/rivers.jpg"
-        let uploadTask = riversRef.put(spotData.screenshotData, metadata: nil) { (metadata, error) in
-            guard let metadata = metadata else {
-                // Uh-oh, an error occurred!
-                print("Error occurred")
-                return
-            }
-            // Metadata contains file metadata such as size, content-type, and download URL.
-            let downloadURL = metadata.downloadURL
-        }
+//       
+//        // Create a reference to the file you want to upload
+//        let riversRef = storageRef!.child(spotData.deviceAppInfo)
+//        
+//        // Upload the file to the path "images/rivers.jpg"
+//        let uploadTask = riversRef.put(spotData.screenshotData, metadata: nil) { (metadata, error) in
+//            guard let metadata = metadata else {
+//                // Uh-oh, an error occurred!
+//                print("Error occurred")
+//                return
+//            }
+//            // Metadata contains file metadata such as size, content-type, and download URL.
+//            let downloadURL = metadata.downloadURL
+//        }
     }
     
     override func connect() {}
@@ -151,14 +132,8 @@ extension UIWindow {
     }
     
     public static func start() {
-        FIRApp.configure()
         // May need to deal with a callback
         sharedInstance.handling = true
-    }
-    
-    func configure() {
-        self.cloudHandler.configuration()
-        self.cloudHandler.connect() // May be better with a callback after configuration
     }
     
     public static func stop() {
