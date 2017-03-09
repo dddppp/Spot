@@ -11,7 +11,6 @@
 import UIKit
 import Foundation
 
-
 struct SpotData {
     var appName : String
     var deviceAppInfo : String
@@ -36,6 +35,10 @@ class CloudHandler {
     func disconnect() {
         fatalError("Default CloudHandler used. Use subclass instead!")
     }
+    
+    func configuration() {
+        fatalError("Default CloudHandler used. Use subclass instead!")
+    }
 }
 
 // MARK: FirebaseHandler
@@ -43,8 +46,48 @@ class CloudHandler {
 // https://firebase.google.com/docs/reference/rest/database/
 // https://firebase.google.com/docs/database/rest/start
 
+
+// !!
+// https://firebase.google.com/docs/storage/gcp-integration
+
 class FirebaseHandler: CloudHandler {
-    override func upload(_ spotData : SpotData) {}
+    
+    // Get a reference to the storage service using the default Firebase App
+    let storage = FIRStorage.storage()
+    // Create a storage reference from our storage service
+    var storageRef : FIRStorageReference?
+
+    required init() {
+        print("FirebaseHandler init")
+        super.init()
+    } 
+    
+    override func configuration() {
+        FIRApp.configure()
+        self.storageRef = storage.reference()
+    }
+    
+    override func upload(_ spotData : SpotData) {
+        guard storageRef != nil else {
+            print("incorrect initilisation")
+            return
+        }
+        
+        // Create a reference to the file you want to upload
+        let riversRef = storageRef!.child(spotData.deviceAppInfo)
+        
+        // Upload the file to the path "images/rivers.jpg"
+        let uploadTask = riversRef.put(spotData.screenshotData, metadata: nil) { (metadata, error) in
+            guard let metadata = metadata else {
+                // Uh-oh, an error occurred!
+                print("Error occurred")
+                return
+            }
+            // Metadata contains file metadata such as size, content-type, and download URL.
+            let downloadURL = metadata.downloadURL
+        }
+    }
+    
     override func connect() {}
     override func disconnect() {}
 }
@@ -81,14 +124,18 @@ extension UIWindow {
 
 @objc public class Spot: NSObject {
     
+    // Should read this from an info.plist file
     static let sharedInstance = Spot(type: FirebaseHandler.self)
+
     var handling: Bool = false
     let cloudHandler: CloudHandler
 
     // MARK: CloudHandler implementation 
     
     init<T: CloudHandler>(type: T.Type) {
+        print("inside init ...")
         cloudHandler = type.init()
+        print("about to terminate init ...")
     }
     
     // MARK: Spot original methods
@@ -98,15 +145,20 @@ extension UIWindow {
         cloudHandler.connect()
     }
     
-    func takeScreenshotAndUpload() {
+    func takeScreenshotAndUpload(spotData : SpotData) {
         // Take screenshot
-        cloudHandler.upload(SpotData())
+        cloudHandler.upload(spotData)
     }
     
     public static func start() {
+        FIRApp.configure()
         // May need to deal with a callback
         sharedInstance.handling = true
-        sharedInstance.cloudHandler.connect()
+    }
+    
+    func configure() {
+        self.cloudHandler.configuration()
+        self.cloudHandler.connect() // May be better with a callback after configuration
     }
     
     public static func stop() {

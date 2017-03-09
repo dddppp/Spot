@@ -110,7 +110,8 @@ class SpotViewController: UIViewController {
     }
     
     @IBAction func pressedSendToCloud(_ sender: Any) {
-        // MARK TODO!
+        print("press send to cloud")
+        Spot.sharedInstance.takeScreenshotAndUpload(spotData: SpotData(appName: Spot.appName(), deviceAppInfo: Spot.deviceAppInfo(), combinedImageData: combinedImageData()!, screenshotData: screenshotData()!))
     }
 }
 
